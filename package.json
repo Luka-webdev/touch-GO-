@@ -1,0 +1,25 @@
+{
+  "name": "touchgo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luka-webdev/touch-GO-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luka-webdev/touch-GO-/issues"
+  },
+  "homepage": "https://github.com/Luka-webdev/touch-GO-#readme",
+  "devDependencies": {
+    "grunt": "^1.3.0",
+    "grunt-autoprefixer": "^3.0.4",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-uglify": "^5.0.0"
+  }
+}
