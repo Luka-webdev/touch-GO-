@@ -1,6 +1,8 @@
-const welcomeScreen = document.querySelector('.welcomeScreen');
+const wrapperWelcomeScreen = document.querySelector('.wrapperWelcomeScreen');
+const wrapperAreaGame = document.querySelector('.wrapperAreaGame');
 const closeWelcomewScreen = document.querySelector('.fa-window-close');
 
+// wrapperAreaGame.classList.add('visibility')
 closeWelcomewScreen.addEventListener('click', function () {
-    welcomeScreen.classList.add('visibility')
+    wrapperWelcomeScreen.classList.add('visibility')
 })
