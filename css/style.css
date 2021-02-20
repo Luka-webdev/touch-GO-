@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.wrapper {
+  background-color: #a3cb38;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-content: space-around;
+  flex-wrap: wrap;
+}
+.track {
+  width: 17%;
+  height: 25%;
+  border: 2px solid black;
+}
+.welcomeScreen {
+  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 400px;
+  border: 4px solid black;
+  background-color: #182c61;
+}
+.gameTitle {
+  text-align: center;
+  padding: 20px 0;
+  font-family: "RocknRoll One", sans-serif;
+  color: white;
+}
+.gameTitle span:nth-child(1) {
+  color: red;
+}
+.gameTitle span:nth-child(2) {
+  color: orangered;
+  font-size: 36px;
+}
+.gameDescription {
+  padding: 0 30px;
+  color: wheat;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.gameDescription p {
+  padding: 10px 0;
+}
+.fa-window-close {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 26px;
+  color: white;
+}
+.fa-window-close:hover {
+  cursor: pointer;
+  color: red;
+}
+.visibility {
+  visibility: hidden;
+}
