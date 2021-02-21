@@ -3,7 +3,17 @@ const wrapperAreaGame = document.querySelector('.wrapperAreaGame');
 const areaGame = document.querySelector('.areaGame');
 const closeWelcomeScreen = document.querySelector('.fa-window-close');
 const wrapperTracks = document.querySelector('.wrapperTracks');
+const ball = document.querySelector('.ball');
 const tracksArray = [track1, track2, track3, track4, track5, track6, track7, track8, track9, track10, track11, track12, track13, track14, track15]
+wrapperAreaGame.classList.add('visibility');
+let flag = false;
+
+// functions for creating boxes showing all tracks and showing area game for active track
+
+const showAreaGame = function () {
+    wrapperAreaGame.classList.remove('visibility')
+    createTrack();
+}
 
 const createTrackBox = function (param) {
     const divElement = document.createElement('div');
@@ -16,12 +26,6 @@ const createTrackBox = function (param) {
     }
     wrapperTracks.appendChild(divElement);
 }
-
-const showAreaGame = function () {
-    wrapperAreaGame.classList.remove('visibility')
-    createTrack();
-}
-
 const showAllTracks = function () {
     for (let i = 0; i < tracksArray.length; i++) {
         if (tracksArray[i].status == "ready") {
@@ -33,22 +37,51 @@ const showAllTracks = function () {
 }
 showAllTracks();
 
-const createTrackElement = function (x, y) {
+
+// functions for creating a track
+
+const createTrackElement = function (column, row) {
     const item = document.createElement('div');
     item.classList.add('trackItem');
-    item.style.top = y + "px";
-    item.style.left = x + "px";
+    item.style.gridColumn = column;
+    item.style.gridRow = row;
     areaGame.appendChild(item);
 }
 
 const createTrack = function () {
     for (let i = 0; i < tracksArray[0].layout.length; i++) {
-        createTrackElement(tracksArray[0].layout[i].x, tracksArray[0].layout[i].y)
+        createTrackElement(tracksArray[0].layout[i].column, tracksArray[0].layout[i].row)
     }
-    console.log(tracksArray[0].layout.length)
+    createBall()
 }
 
-wrapperAreaGame.classList.add('visibility')
+// function to create ball 
+
+const createBall = function () {
+    let ballSize = parseInt(getComputedStyle(areaGame).height) / 7 * 0.6;
+    ball.style.width = ballSize + "px";
+    ball.style.height = ballSize + "px";
+}
+
+//functions to move ball
+
+ball.addEventListener('mousedown', function () {
+    flag = true;
+})
+ball.addEventListener('mouseup', function () {
+    flag = false;
+})
+ball.addEventListener('mousemove', function (e) {
+    let shiftX = parseInt(getComputedStyle(areaGame).marginLeft);
+    let shiftY = parseInt(getComputedStyle(areaGame).marginTop);
+    if (flag) {
+        ball.style.top = e.clientY - shiftY - parseInt(ball.style.width) / 2 + "px";
+        ball.style.left = e.clientX - shiftX - parseInt(ball.style.width) / 2 + "px";
+    }
+})
+
+// close the welcome screen
+
 closeWelcomeScreen.addEventListener('click', function () {
-    wrapperWelcomeScreen.classList.add('visibility')
+    wrapperWelcomeScreen.classList.add('visibility');
 })

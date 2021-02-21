@@ -2,57 +2,56 @@ const track1 = {
     status: "ready",
     ballSize: 50,
     layout: [{
-            x: 0,
-            y: 100
+            column: 1,
+            row: 3
         },
         {
-            x: 100,
-            y: 100
+            column: 2,
+            row: 3
         },
         {
-            x: 200,
-            y: 100
+            column: 3,
+            row: 3
         },
         {
-            x: 300,
-            y: 100
+            column: 4,
+            row: 3
         },
         {
-            x: 400,
-            y: 100
+            column: 5,
+            row: 3
         },
         {
-            x: 500,
-            y: 100
+            column: 6,
+            row: 3
         },
         {
-            x: 500,
-            y: 200
+            column: 6,
+            row: 4
         },
         {
-            x: 500,
-            y: 300
+            column: 6,
+            row: 5
         },
         {
-            x: 600,
-            y: 300
+            column: 7,
+            row: 5
         },
         {
-            x: 700,
-            y: 300
+            column: 8,
+            row: 5
+        }, {
+            column: 9,
+            row: 5
+        }, {
+            column: 10,
+            row: 5
+        }, {
+            column: 11,
+            row: 5
+        }, {
+            column: 12,
+            row: 5
         },
-        {
-            x: 800,
-            y: 300
-        },
-        {
-            x: 900,
-            y: 300
-        },
-        {
-            x: 1000,
-            y: 300
-        },
-
     ]
 }
