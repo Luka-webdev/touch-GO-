@@ -58,9 +58,11 @@ const createTrack = function () {
 // function to create ball 
 
 const createBall = function () {
-    let ballSize = parseInt(getComputedStyle(areaGame).height) / 7 * 0.6;
+    let heightTrackElement = parseInt(getComputedStyle(areaGame).height) / 7;
+    let ballSize = heightTrackElement * 0.6;
     ball.style.width = ballSize + "px";
     ball.style.height = ballSize + "px";
+    ball.style.top = heightTrackElement * (tracksArray[0].layout[0].row - 1) + (heightTrackElement / 2) - ballSize / 2 + "px";
 }
 
 //functions to move ball
