@@ -7,6 +7,16 @@ const ball = document.querySelector('.ball');
 const tracksArray = [track1, track2, track3, track4, track5, track6, track7, track8, track9, track10, track11, track12, track13, track14, track15]
 wrapperAreaGame.classList.add('visibility');
 let flag = false;
+let dimensionsAreaGame = getComputedStyle(areaGame);
+let size = 0.6;
+
+const settings = {
+    shiftX: parseInt(dimensionsAreaGame.marginLeft),
+    shiftY: parseInt(dimensionsAreaGame.marginTop),
+    heightTrackElement: parseInt(dimensionsAreaGame.height) / 7,
+    widthTrackElement: parseInt(dimensionsAreaGame.width) / 12,
+    ballSize: parseInt(dimensionsAreaGame.height) / 7 * size
+}
 
 // functions for creating boxes showing all tracks and showing area game for active track
 
@@ -37,7 +47,6 @@ const showAllTracks = function () {
 }
 showAllTracks();
 
-
 // functions for creating a track
 
 const createTrackElement = function (column, row) {
@@ -58,14 +67,19 @@ const createTrack = function () {
 // function to create ball 
 
 const createBall = function () {
-    let heightTrackElement = parseInt(getComputedStyle(areaGame).height) / 7;
-    let ballSize = heightTrackElement * 0.6;
-    ball.style.width = ballSize + "px";
-    ball.style.height = ballSize + "px";
-    ball.style.top = heightTrackElement * (tracksArray[0].layout[0].row - 1) + (heightTrackElement / 2) - ballSize / 2 + "px";
+    ball.style.width = settings.ballSize + "px";
+    ball.style.height = settings.ballSize + "px";
+    ball.style.top = settings.heightTrackElement * (tracksArray[0].layout[0].row - 1) + (settings.heightTrackElement / 2) - settings.ballSize / 2 + "px";
 }
 
 //functions to move ball
+
+const moveBall = function (e) {
+    if (flag) {
+        ball.style.top = e.clientY - settings.shiftY - settings.ballSize / 2 + "px";
+        ball.style.left = e.clientX - settings.shiftX - settings.ballSize / 2 + "px";
+    }
+}
 
 ball.addEventListener('mousedown', function () {
     flag = true;
@@ -73,14 +87,7 @@ ball.addEventListener('mousedown', function () {
 ball.addEventListener('mouseup', function () {
     flag = false;
 })
-ball.addEventListener('mousemove', function (e) {
-    let shiftX = parseInt(getComputedStyle(areaGame).marginLeft);
-    let shiftY = parseInt(getComputedStyle(areaGame).marginTop);
-    if (flag) {
-        ball.style.top = e.clientY - shiftY - parseInt(ball.style.width) / 2 + "px";
-        ball.style.left = e.clientX - shiftX - parseInt(ball.style.width) / 2 + "px";
-    }
-})
+ball.addEventListener('mousemove', moveBall)
 
 // close the welcome screen
 
