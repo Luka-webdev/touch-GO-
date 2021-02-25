@@ -2,13 +2,17 @@ const wrapperWelcomeScreen = document.querySelector('.wrapperWelcomeScreen');
 const wrapperAreaGame = document.querySelector('.wrapperAreaGame');
 const areaGame = document.querySelector('.areaGame');
 const closeWelcomeScreen = document.querySelector('.fa-window-close');
+const continueGame = document.querySelector('.continueGame');
+const continueGameBtn = document.querySelector('.fa-arrow-circle-right');
 const wrapperTracks = document.querySelector('.wrapperTracks');
 const ball = document.querySelector('.ball');
 const tracksArray = [track1, track2, track3, track4, track5, track6, track7, track8, track9, track10, track11, track12, track13, track14, track15]
-wrapperAreaGame.classList.add('visibility');
 let flag = false;
 let dimensionsAreaGame = getComputedStyle(areaGame);
 let size = 0.6;
+
+wrapperAreaGame.classList.add('visibility');
+continueGame.classList.add('visibility');
 
 const settings = {
     shiftX: parseInt(dimensionsAreaGame.marginLeft),
@@ -69,7 +73,17 @@ const createTrack = function () {
 const createBall = function () {
     ball.style.width = settings.ballSize + "px";
     ball.style.height = settings.ballSize + "px";
+    ball.style.left = 0 + "px";
     ball.style.top = settings.heightTrackElement * (tracksArray[0].layout[0].row - 1) + (settings.heightTrackElement / 2) - settings.ballSize / 2 + "px";
+}
+
+// function to end game
+
+const gameOver = function () {
+    flag = false;
+    setTimeout(() => {
+        continueGame.classList.remove('visibility');
+    }, 500)
 }
 
 //determining the ending conditions of the game
@@ -82,23 +96,22 @@ const gameOverConditions = function (direction) {
     switch (direction) {
         case 'horizontal':
             if ((ballCenterY + settings.ballSize / 2) > bottomBorderTrackItem || (ballCenterY - settings.ballSize / 2) < topBorderTrackItem) {
-                alert("działa");
+                gameOver();
             }
             break;
-
         case 'vertical':
             if ((ballCenterX + settings.ballSize / 2) > leftBorderTrackItem || (ballCenterX - settings.ballSize / 2) < rightBorderTrackItem) {
-                alert("działa");
+                gameOver();
             }
             break;
         case 'top-right':
             if ((ballCenterX + settings.ballSize / 2) > leftBorderTrackItem || (ballCenterY - settings.ballSize / 2) < topBorderTrackItem) {
-                alert("działa");
+                gameOver();
             }
             break;
         case 'bottom-left':
             if ((ballCenterX - settings.ballSize / 2) < rightBorderTrackItem || (ballCenterY + settings.ballSize / 2) > bottomBorderTrackItem) {
-                alert("działa");
+                gameOver();
             }
             break;
     }
@@ -122,7 +135,6 @@ const recognizeTrackElement = function () {
 //functions to move ball
 
 const moveBall = function (e) {
-
     if (flag) {
         ball.style.top = e.clientY - settings.shiftY - offsetY + "px";
         ball.style.left = e.clientX - settings.shiftX - offsetX + "px";
@@ -145,4 +157,11 @@ areaGame.addEventListener('mousemove', moveBall)
 
 closeWelcomeScreen.addEventListener('click', function () {
     wrapperWelcomeScreen.classList.add('visibility');
+})
+
+// continue game
+
+continueGameBtn.addEventListener('click', function () {
+    continueGame.classList.add('visibility');
+    showAreaGame();
 })
