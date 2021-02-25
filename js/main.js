@@ -72,22 +72,74 @@ const createBall = function () {
     ball.style.top = settings.heightTrackElement * (tracksArray[0].layout[0].row - 1) + (settings.heightTrackElement / 2) - settings.ballSize / 2 + "px";
 }
 
-//functions to move ball
+//determining the ending conditions of the game
 
-const moveBall = function (e) {
-    if (flag) {
-        ball.style.top = e.clientY - settings.shiftY - settings.ballSize / 2 + "px";
-        ball.style.left = e.clientX - settings.shiftX - settings.ballSize / 2 + "px";
+const gameOverConditions = function (direction) {
+    let leftBorderTrackItem = actualColumn * settings.widthTrackElement;
+    let rightBorderTrackItem = (actualColumn - 1) * settings.widthTrackElement;
+    let bottomBorderTrackItem = actualRow * settings.heightTrackElement;
+    let topBorderTrackItem = (actualRow - 1) * settings.heightTrackElement;
+    switch (direction) {
+        case 'horizontal':
+            if ((ballCenterY + settings.ballSize / 2) > bottomBorderTrackItem || (ballCenterY - settings.ballSize / 2) < topBorderTrackItem) {
+                alert("działa");
+            }
+            break;
+
+        case 'vertical':
+            if ((ballCenterX + settings.ballSize / 2) > leftBorderTrackItem || (ballCenterX - settings.ballSize / 2) < rightBorderTrackItem) {
+                alert("działa");
+            }
+            break;
+        case 'top-right':
+            if ((ballCenterX + settings.ballSize / 2) > leftBorderTrackItem || (ballCenterY - settings.ballSize / 2) < topBorderTrackItem) {
+                alert("działa");
+            }
+            break;
+        case 'bottom-left':
+            if ((ballCenterX - settings.ballSize / 2) < rightBorderTrackItem || (ballCenterY + settings.ballSize / 2) > bottomBorderTrackItem) {
+                alert("działa");
+            }
+            break;
     }
 }
 
-ball.addEventListener('mousedown', function () {
+//function for recognizing a track element
+
+const recognizeTrackElement = function () {
+    ballCenterX = parseInt(ball.style.left) + settings.ballSize / 2;
+    ballCenterY = parseInt(ball.style.top) + settings.ballSize / 2;
+    actualColumn = Math.ceil(ballCenterX / settings.widthTrackElement);
+    actualRow = Math.ceil(ballCenterY / settings.heightTrackElement);
+    for (let i = 0; i < tracksArray[0].layout.length; i++) {
+        if (tracksArray[0].layout[i].column == actualColumn && tracksArray[0].layout[i].row == actualRow) {
+            let direction = tracksArray[0].layout[i].direction;
+            gameOverConditions(direction)
+        }
+    }
+}
+
+//functions to move ball
+
+const moveBall = function (e) {
+
+    if (flag) {
+        ball.style.top = e.clientY - settings.shiftY - offsetY + "px";
+        ball.style.left = e.clientX - settings.shiftX - offsetX + "px";
+        recognizeTrackElement();
+    }
+}
+const getOffsetProperty = function (e) {
     flag = true;
-})
+    offsetX = e.offsetX;
+    offsetY = e.offsetY;
+}
+ball.addEventListener('mousedown', getOffsetProperty);
+
 ball.addEventListener('mouseup', function () {
     flag = false;
 })
-ball.addEventListener('mousemove', moveBall)
+areaGame.addEventListener('mousemove', moveBall)
 
 // close the welcome screen
 
