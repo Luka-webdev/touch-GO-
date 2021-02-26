@@ -28,7 +28,7 @@ const showAreaGame = function () {
     createTrack();
 }
 
-const createTrackBox = function (param) {
+const createTrackBox = function (param, index) {
     const divElement = document.createElement('div');
     divElement.classList.add('trackBox');
     if (param == "ready") {
@@ -37,7 +37,7 @@ const createTrackBox = function (param) {
     } else if (param == "blocked") {
         divElement.innerHTML = '<i class = "fas fa-lock" ></i>';
     } else if (param == "done") {
-        divElement.style.backgroundImage = 'url(pictures/picture' + (actualTrack - 1) + '.png)';
+        divElement.style.backgroundImage = 'url(pictures/picture' + (index) + '.png)';
         divElement.innerHTML = '<i class="fas fa-check"></i>';
     }
     wrapperTracks.appendChild(divElement);
@@ -49,7 +49,7 @@ const showAllTracks = function () {
         } else if (tracksArray[i].status == "blocked") {
             createTrackBox("blocked");
         } else if (tracksArray[i].status == "done") {
-            createTrackBox("done"); //jeżeli ma done to przekaż index elementu i wstaw jako nr picture
+            createTrackBox("done", i);
         }
     }
 }
@@ -93,8 +93,8 @@ const gameOver = function () {
 //determining the conditions for losing the game
 
 const gameOverConditions = function (direction) {
-    let leftBorderTrackItem = actualColumn * settings.widthTrackElement;
-    let rightBorderTrackItem = (actualColumn - 1) * settings.widthTrackElement;
+    let rightBorderTrackItem = actualColumn * settings.widthTrackElement;
+    let leftBorderTrackItem = (actualColumn - 1) * settings.widthTrackElement;
     let bottomBorderTrackItem = actualRow * settings.heightTrackElement;
     let topBorderTrackItem = (actualRow - 1) * settings.heightTrackElement;
     switch (direction) {
@@ -104,17 +104,27 @@ const gameOverConditions = function (direction) {
             }
             break;
         case 'vertical':
-            if ((ballCenterX + settings.ballSize / 2) > leftBorderTrackItem || (ballCenterX - settings.ballSize / 2) < rightBorderTrackItem) {
+            if ((ballCenterX - settings.ballSize / 2) < leftBorderTrackItem || (ballCenterX + settings.ballSize / 2) > rightBorderTrackItem) {
                 gameOver();
             }
             break;
         case 'top-right':
-            if ((ballCenterX + settings.ballSize / 2) > leftBorderTrackItem || (ballCenterY - settings.ballSize / 2) < topBorderTrackItem) {
+            if ((ballCenterX + settings.ballSize / 2) > rightBorderTrackItem || (ballCenterY - settings.ballSize / 2) < topBorderTrackItem) {
                 gameOver();
             }
             break;
         case 'bottom-left':
-            if ((ballCenterX - settings.ballSize / 2) < rightBorderTrackItem || (ballCenterY + settings.ballSize / 2) > bottomBorderTrackItem) {
+            if ((ballCenterX - settings.ballSize / 2) < leftBorderTrackItem || (ballCenterY + settings.ballSize / 2) > bottomBorderTrackItem) {
+                gameOver();
+            }
+            break;
+        case 'bottom-right':
+            if ((ballCenterX + settings.ballSize / 2) > rightBorderTrackItem || (ballCenterY + settings.ballSize / 2) > bottomBorderTrackItem) {
+                gameOver();
+            }
+            break;
+        case 'top-left':
+            if ((ballCenterX - settings.ballSize / 2) < leftBorderTrackItem || (ballCenterY - settings.ballSize / 2) < topBorderTrackItem) {
                 gameOver();
             }
             break;
@@ -171,7 +181,6 @@ const trackCrossing = function () {
             actualTrack++;
             tracksArray[actualTrack].status = "ready";
             showAllTracks();
-            createTrack();
         }, 3000);
     }
 }

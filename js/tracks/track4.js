@@ -23,7 +23,7 @@ const track4 = {
         {
             column: 5,
             row: 2,
-            direction: "top-left"
+            direction: "top-right"
         },
         {
             column: 5,
