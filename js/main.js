@@ -3,6 +3,7 @@ const wrapperAreaGame = document.querySelector('.wrapperAreaGame');
 const areaGame = document.querySelector('.areaGame');
 const closeWelcomeScreen = document.querySelector('.fa-window-close');
 const continueGame = document.querySelector('.continueGame');
+const trackWin = document.querySelector('.trackWin');
 const continueGameBtn = document.querySelector('.fa-arrow-circle-right');
 const wrapperTracks = document.querySelector('.wrapperTracks');
 const ball = document.querySelector('.ball');
@@ -10,9 +11,6 @@ const tracksArray = [track1, track2, track3, track4, track5, track6, track7, tra
 let flag = false;
 let dimensionsAreaGame = getComputedStyle(areaGame);
 let size = 0.6;
-
-wrapperAreaGame.classList.add('visibility');
-continueGame.classList.add('visibility');
 
 const settings = {
     shiftX: parseInt(dimensionsAreaGame.marginLeft),
@@ -77,7 +75,7 @@ const createBall = function () {
     ball.style.top = settings.heightTrackElement * (tracksArray[0].layout[0].row - 1) + (settings.heightTrackElement / 2) - settings.ballSize / 2 + "px";
 }
 
-// function to end game
+// function to lose game
 
 const gameOver = function () {
     flag = false;
@@ -86,7 +84,7 @@ const gameOver = function () {
     }, 500)
 }
 
-//determining the ending conditions of the game
+//determining the conditions for losing the game
 
 const gameOverConditions = function (direction) {
     let leftBorderTrackItem = actualColumn * settings.widthTrackElement;
@@ -132,13 +130,28 @@ const recognizeTrackElement = function () {
     }
 }
 
+//function informing about the crossing of the track
+
+const trackCrossing = function () {
+    if (parseInt(ball.style.left) + settings.ballSize >= parseInt(dimensionsAreaGame.width)) {
+        flag = false;
+        setTimeout(() => {
+            trackWin.classList.remove('visibility');
+        }, 500)
+    }
+}
+
 //functions to move ball
 
 const moveBall = function (e) {
     if (flag) {
         ball.style.top = e.clientY - settings.shiftY - offsetY + "px";
         ball.style.left = e.clientX - settings.shiftX - offsetX + "px";
+        if (ball.style.left < 0 + "px") {
+            ball.style.left = 0 + "px";
+        }
         recognizeTrackElement();
+        trackCrossing();
     }
 }
 const getOffsetProperty = function (e) {

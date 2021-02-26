@@ -126,7 +126,8 @@
   border-radius: 50%;
   background-color: #c23616;
 }
-.continueGame {
+.continueGame,
+.trackWin {
   position: absolute;
   top: 50%;
   left: 50%;
