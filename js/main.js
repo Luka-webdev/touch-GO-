@@ -49,7 +49,7 @@ const showAllTracks = function () {
         } else if (tracksArray[i].status == "blocked") {
             createTrackBox("blocked");
         } else if (tracksArray[i].status == "done") {
-            createTrackBox("done");
+            createTrackBox("done"); //jeżeli ma done to przekaż index elementu i wstaw jako nr picture
         }
     }
 }
@@ -145,6 +145,15 @@ const removeTracksBoxes = function () {
     }
 }
 
+//remove previous track
+
+const removeTrack = function () {
+    const previousTrack = areaGame.querySelectorAll('.trackItem');
+    for (let i = 0; i < previousTrack.length; i++) {
+        areaGame.removeChild(previousTrack[i]);
+    }
+}
+
 //function informing about the crossing of the track and change of the current track number
 
 const trackCrossing = function () {
@@ -158,11 +167,12 @@ const trackCrossing = function () {
             wrapperAreaGame.classList.add('visibility');
             tracksArray[actualTrack].status = "done";
             removeTracksBoxes();
+            removeTrack();
             actualTrack++;
             tracksArray[actualTrack].status = "ready";
             showAllTracks();
-        }, 3000)
-
+            createTrack();
+        }, 3000);
     }
 }
 
@@ -172,9 +182,9 @@ const moveBall = function (e) {
     if (flag) {
         ball.style.top = e.clientY - settings.shiftY - offsetY + "px";
         ball.style.left = e.clientX - settings.shiftX - offsetX + "px";
-        if (ball.style.left < 0 + "px") {
-            ball.style.left = 0 + "px";
-        }
+        // if (ball.style.left < 0 + "px") {
+        //     ball.style.left = 0 + "px";
+        // }
         recognizeTrackElement();
         trackCrossing();
     }
