@@ -11,6 +11,7 @@ const tracksArray = [track1, track2, track3, track4, track5, track6, track7, tra
 let flag = false;
 let dimensionsAreaGame = getComputedStyle(areaGame);
 let size = 0.6;
+let actualTrack = 0;
 
 const settings = {
     shiftX: parseInt(dimensionsAreaGame.marginLeft),
@@ -31,10 +32,13 @@ const createTrackBox = function (param) {
     const divElement = document.createElement('div');
     divElement.classList.add('trackBox');
     if (param == "ready") {
-        divElement.style.backgroundImage = 'url(pictures/picture1.png)';
+        divElement.style.backgroundImage = 'url(pictures/picture' + actualTrack + '.png)';
         divElement.addEventListener('click', showAreaGame)
     } else if (param == "blocked") {
         divElement.innerHTML = '<i class = "fas fa-lock" ></i>';
+    } else if (param == "done") {
+        divElement.style.backgroundImage = 'url(pictures/picture' + (actualTrack - 1) + '.png)';
+        divElement.innerHTML = '<i class="fas fa-check"></i>';
     }
     wrapperTracks.appendChild(divElement);
 }
@@ -42,8 +46,10 @@ const showAllTracks = function () {
     for (let i = 0; i < tracksArray.length; i++) {
         if (tracksArray[i].status == "ready") {
             createTrackBox("ready");
-        } else {
+        } else if (tracksArray[i].status == "blocked") {
             createTrackBox("blocked");
+        } else if (tracksArray[i].status == "done") {
+            createTrackBox("done");
         }
     }
 }
@@ -60,8 +66,8 @@ const createTrackElement = function (column, row) {
 }
 
 const createTrack = function () {
-    for (let i = 0; i < tracksArray[0].layout.length; i++) {
-        createTrackElement(tracksArray[0].layout[i].column, tracksArray[0].layout[i].row)
+    for (let i = 0; i < tracksArray[actualTrack].layout.length; i++) {
+        createTrackElement(tracksArray[actualTrack].layout[i].column, tracksArray[actualTrack].layout[i].row)
     }
     createBall()
 }
@@ -72,7 +78,7 @@ const createBall = function () {
     ball.style.width = settings.ballSize + "px";
     ball.style.height = settings.ballSize + "px";
     ball.style.left = 0 + "px";
-    ball.style.top = settings.heightTrackElement * (tracksArray[0].layout[0].row - 1) + (settings.heightTrackElement / 2) - settings.ballSize / 2 + "px";
+    ball.style.top = settings.heightTrackElement * (tracksArray[actualTrack].layout[0].row - 1) + (settings.heightTrackElement / 2) - settings.ballSize / 2 + "px";
 }
 
 // function to lose game
@@ -122,15 +128,24 @@ const recognizeTrackElement = function () {
     ballCenterY = parseInt(ball.style.top) + settings.ballSize / 2;
     actualColumn = Math.ceil(ballCenterX / settings.widthTrackElement);
     actualRow = Math.ceil(ballCenterY / settings.heightTrackElement);
-    for (let i = 0; i < tracksArray[0].layout.length; i++) {
-        if (tracksArray[0].layout[i].column == actualColumn && tracksArray[0].layout[i].row == actualRow) {
-            let direction = tracksArray[0].layout[i].direction;
+    for (let i = 0; i < tracksArray[actualTrack].layout.length; i++) {
+        if (tracksArray[actualTrack].layout[i].column == actualColumn && tracksArray[actualTrack].layout[i].row == actualRow) {
+            let direction = tracksArray[actualTrack].layout[i].direction;
             gameOverConditions(direction)
         }
     }
 }
 
-//function informing about the crossing of the track
+//remove all tracks boxes
+
+const removeTracksBoxes = function () {
+    const allTrackBoxes = wrapperTracks.querySelectorAll('div');
+    for (let i = 0; i < allTrackBoxes.length; i++) {
+        wrapperTracks.removeChild(allTrackBoxes[i]);
+    }
+}
+
+//function informing about the crossing of the track and change of the current track number
 
 const trackCrossing = function () {
     if (parseInt(ball.style.left) + settings.ballSize >= parseInt(dimensionsAreaGame.width)) {
@@ -138,6 +153,16 @@ const trackCrossing = function () {
         setTimeout(() => {
             trackWin.classList.remove('visibility');
         }, 500)
+        setTimeout(() => {
+            trackWin.classList.add('visibility');
+            wrapperAreaGame.classList.add('visibility');
+            tracksArray[actualTrack].status = "done";
+            removeTracksBoxes();
+            actualTrack++;
+            tracksArray[actualTrack].status = "ready";
+            showAllTracks();
+        }, 3000)
+
     }
 }
 

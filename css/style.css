@@ -42,6 +42,9 @@
 .trackItem {
   background-color: #0a3d62;
 }
+.trackBox .fa-check {
+  color: lime;
+}
 
 /* Styles of welcome screen */
 
