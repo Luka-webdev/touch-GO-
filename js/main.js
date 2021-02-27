@@ -27,7 +27,7 @@ const settings = {
 const showAreaGame = function () {
     wrapperAreaGame.classList.remove('visibility')
     createTrack();
-    timing();
+    counter.textContent = `${Math.ceil(tracksArray[actualTrack].layout.length / 3).toFixed(2)}`;
 }
 
 const createTrackBox = function (param, index) {
@@ -70,8 +70,7 @@ const createTrackElement = function (column, row) {
 const createTrack = function () {
     for (let i = 0; i < tracksArray[actualTrack].layout.length; i++) {
         createTrackElement(tracksArray[actualTrack].layout[i].column, tracksArray[actualTrack].layout[i].row)
-    }
-
+    };
     createBall()
 }
 
@@ -87,7 +86,6 @@ const createBall = function () {
 // time measurement
 
 const timing = function () {
-    counter.textContent = "";
     let second = Math.ceil(tracksArray[actualTrack].layout.length / 3);
     interval = setInterval(() => {
         counter.textContent = `${second.toFixed(2)}`;
@@ -96,8 +94,7 @@ const timing = function () {
             clearInterval(interval);
             gameOver();
         }
-    }, 10)
-
+    }, 10);
 }
 
 // function to lose game
@@ -222,6 +219,7 @@ const moveBall = function (e) {
 }
 const getOffsetProperty = function (e) {
     flag = true;
+    timing();
     offsetX = e.offsetX;
     offsetY = e.offsetY;
 }
