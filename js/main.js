@@ -12,7 +12,7 @@ const tracksArray = [track1, track2, track3, track4, track5, track6, track7, tra
 let flag = false;
 let dimensionsAreaGame = getComputedStyle(areaGame);
 let size = 0.5;
-let actualTrack = 0;
+let actualTrack = 11;
 
 const settings = {
     shiftX: parseInt(dimensionsAreaGame.marginLeft),
@@ -219,7 +219,7 @@ const moveBall = function (e) {
 }
 const getOffsetProperty = function (e) {
     flag = true;
-    timing();
+    timing(); //wywołaj tę metodę w innym miejscu
     offsetX = e.offsetX;
     offsetY = e.offsetY;
 }
