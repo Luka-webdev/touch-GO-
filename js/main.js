@@ -7,10 +7,11 @@ const trackWin = document.querySelector('.trackWin');
 const continueGameBtn = document.querySelector('.fa-arrow-circle-right');
 const wrapperTracks = document.querySelector('.wrapperTracks');
 const ball = document.querySelector('.ball');
+const counter = document.querySelector('.counter');
 const tracksArray = [track1, track2, track3, track4, track5, track6, track7, track8, track9, track10, track11, track12, track13, track14, track15]
 let flag = false;
 let dimensionsAreaGame = getComputedStyle(areaGame);
-let size = 0.6;
+let size = 0.5;
 let actualTrack = 0;
 
 const settings = {
@@ -26,6 +27,7 @@ const settings = {
 const showAreaGame = function () {
     wrapperAreaGame.classList.remove('visibility')
     createTrack();
+    timing();
 }
 
 const createTrackBox = function (param, index) {
@@ -69,6 +71,7 @@ const createTrack = function () {
     for (let i = 0; i < tracksArray[actualTrack].layout.length; i++) {
         createTrackElement(tracksArray[actualTrack].layout[i].column, tracksArray[actualTrack].layout[i].row)
     }
+
     createBall()
 }
 
@@ -81,10 +84,27 @@ const createBall = function () {
     ball.style.top = settings.heightTrackElement * (tracksArray[actualTrack].layout[0].row - 1) + (settings.heightTrackElement / 2) - settings.ballSize / 2 + "px";
 }
 
+// time measurement
+
+const timing = function () {
+    counter.textContent = "";
+    let second = Math.ceil(tracksArray[actualTrack].layout.length / 3);
+    interval = setInterval(() => {
+        counter.textContent = `${second.toFixed(2)}`;
+        second -= 0.01;
+        if (second < 0) {
+            clearInterval(interval);
+            gameOver();
+        }
+    }, 10)
+
+}
+
 // function to lose game
 
 const gameOver = function () {
     flag = false;
+    clearInterval(interval);
     setTimeout(() => {
         continueGame.classList.remove('visibility');
     }, 500)
@@ -169,6 +189,7 @@ const removeTrack = function () {
 const trackCrossing = function () {
     if (parseInt(ball.style.left) + settings.ballSize >= parseInt(dimensionsAreaGame.width)) {
         flag = false;
+        clearInterval(interval);
         setTimeout(() => {
             trackWin.classList.remove('visibility');
         }, 500)
@@ -179,6 +200,7 @@ const trackCrossing = function () {
             removeTracksBoxes();
             removeTrack();
             actualTrack++;
+            settings.ballSize += 1;
             tracksArray[actualTrack].status = "ready";
             showAllTracks();
         }, 3000);

@@ -156,3 +156,11 @@
   cursor: pointer;
   color: lime;
 }
+.counter {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px 15px;
+  background-color: #345;
+  font-size: 26px;
+}
