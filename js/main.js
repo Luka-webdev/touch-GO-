@@ -4,13 +4,19 @@ const areaGame = document.querySelector('.areaGame');
 const closeWelcomeScreen = document.querySelector('.fa-window-close');
 const continueGame = document.querySelector('.continueGame');
 const trackWin = document.querySelector('.trackWin');
+const gameWin = document.querySelector('.gameWin');
 const continueGameBtn = document.querySelector('.fa-arrow-circle-right');
 const wrapperTracks = document.querySelector('.wrapperTracks');
 const ball = document.querySelector('.ball');
 const counter = document.querySelector('.counter');
+const tryAgain = document.querySelector('.fa-undo-alt');
+const totalTime = document.querySelector('.totalTime');
+const totalMistakes = document.querySelector('.totalMistakes');
 const tracksArray = [track1, track2, track3, track4, track5, track6, track7, track8, track9, track10, track11, track12, track13, track14, track15]
 let flag = false;
 let startTiming = 0;
+let totalMistakesSum = 0;
+let totalTimesSum = 0;
 let dimensionsAreaGame = getComputedStyle(areaGame);
 let size = 0.5;
 let actualTrack = 0;
@@ -100,15 +106,26 @@ const timing = function () {
     }
 }
 
+// counting times
+
+const countingTimes = function () {
+    let trackTime = Math.ceil(tracksArray[actualTrack].layout.length / 3) - counter.textContent;
+    console.log(trackTime)
+    totalTimesSum += trackTime;
+    console.log(totalTimesSum)
+}
+
 // function to lose game
 
 const gameOver = function () {
     flag = false;
     startTiming = 0;
+    totalMistakesSum++;
     clearInterval(interval);
     setTimeout(() => {
         continueGame.classList.remove('visibility');
     }, 500)
+
 }
 
 //determining the conditions for losing the game
@@ -191,20 +208,29 @@ const trackCrossing = function () {
     if (parseInt(ball.style.left) + settings.ballSize >= parseInt(dimensionsAreaGame.width)) {
         flag = false;
         startTiming = 0;
+        countingTimes();
         clearInterval(interval);
         setTimeout(() => {
-            trackWin.classList.remove('visibility');
+            if (actualTrack == tracksArray.length - 1) {
+                totalMistakes.textContent = `Łączna ilość błędów: ${totalMistakesSum}`;
+                totalTime.textContent = `Łączna czas przejścia wszystkich labiryntów: ${totalTimesSum.toFixed(2)}`;
+                gameWin.classList.remove('visibility');
+            } else {
+                trackWin.classList.remove('visibility');
+            }
         }, 500)
         setTimeout(() => {
-            trackWin.classList.add('visibility');
-            wrapperAreaGame.classList.add('visibility');
-            tracksArray[actualTrack].status = "done";
-            removeTracksBoxes();
-            removeTrack();
-            actualTrack++;
-            settings.ballSize += 1;
-            tracksArray[actualTrack].status = "ready";
-            showAllTracks();
+            if (actualTrack != tracksArray.length - 1) {
+                trackWin.classList.add('visibility');
+                wrapperAreaGame.classList.add('visibility');
+                tracksArray[actualTrack].status = "done";
+                removeTracksBoxes();
+                removeTrack();
+                actualTrack++;
+                settings.ballSize += 1;
+                tracksArray[actualTrack].status = "ready";
+                showAllTracks();
+            }
         }, 3000);
     }
 }
@@ -246,5 +272,26 @@ closeWelcomeScreen.addEventListener('click', function () {
 
 continueGameBtn.addEventListener('click', function () {
     continueGame.classList.add('visibility');
+    removeTrack();
     showAreaGame();
+})
+// game from the beginning
+
+tryAgain.addEventListener('click', function () {
+    gameWin.classList.add('visibility');
+    wrapperAreaGame.classList.add('visibility');
+    removeTrack();
+    removeTracksBoxes();
+    settings.ballSize = parseInt(dimensionsAreaGame.height) / 7 * size;
+    actualTrack = 0;
+    totalMistakesSum = 0;
+    totalTimesSum = 0;
+    for (let i = 0; i < tracksArray.length; i++) {
+        if (i == 0) {
+            tracksArray[i].status = "ready";
+        } else {
+            tracksArray[i].status = "blocked";
+        }
+    }
+    showAllTracks();
 })

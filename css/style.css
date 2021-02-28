@@ -130,7 +130,8 @@
   background-color: #c23616;
 }
 .continueGame,
-.trackWin {
+.trackWin,
+.gameWin {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -148,11 +149,13 @@
   font-family: "RocknRoll One", sans-serif;
   padding: 20px;
 }
-.fa-arrow-circle-right {
+.fa-arrow-circle-right,
+.fa-undo-alt {
   margin: 0 10px;
   font-size: 30px;
 }
-.fa-arrow-circle-right:hover {
+.fa-arrow-circle-right:hover,
+.fa-undo-alt:hover {
   cursor: pointer;
   color: lime;
 }
