@@ -10,9 +10,10 @@ const ball = document.querySelector('.ball');
 const counter = document.querySelector('.counter');
 const tracksArray = [track1, track2, track3, track4, track5, track6, track7, track8, track9, track10, track11, track12, track13, track14, track15]
 let flag = false;
+let startTiming = 0;
 let dimensionsAreaGame = getComputedStyle(areaGame);
 let size = 0.5;
-let actualTrack = 11;
+let actualTrack = 0;
 
 const settings = {
     shiftX: parseInt(dimensionsAreaGame.marginLeft),
@@ -87,20 +88,23 @@ const createBall = function () {
 
 const timing = function () {
     let second = Math.ceil(tracksArray[actualTrack].layout.length / 3);
-    interval = setInterval(() => {
-        counter.textContent = `${second.toFixed(2)}`;
-        second -= 0.01;
-        if (second < 0) {
-            clearInterval(interval);
-            gameOver();
-        }
-    }, 10);
+    if (startTiming == 1) {
+        interval = setInterval(() => {
+            counter.textContent = `${second.toFixed(2)}`;
+            second -= 0.01;
+            if (second < 0) {
+                clearInterval(interval);
+                gameOver();
+            }
+        }, 10);
+    }
 }
 
 // function to lose game
 
 const gameOver = function () {
     flag = false;
+    startTiming = 0;
     clearInterval(interval);
     setTimeout(() => {
         continueGame.classList.remove('visibility');
@@ -186,6 +190,7 @@ const removeTrack = function () {
 const trackCrossing = function () {
     if (parseInt(ball.style.left) + settings.ballSize >= parseInt(dimensionsAreaGame.width)) {
         flag = false;
+        startTiming = 0;
         clearInterval(interval);
         setTimeout(() => {
             trackWin.classList.remove('visibility');
@@ -210,16 +215,17 @@ const moveBall = function (e) {
     if (flag) {
         ball.style.top = e.clientY - settings.shiftY - offsetY + "px";
         ball.style.left = e.clientX - settings.shiftX - offsetX + "px";
-        // if (ball.style.left < 0 + "px") {
-        //     ball.style.left = 0 + "px";
-        // }
+        if (ball.style.left < 0 + "px") {
+            ball.style.left = 0 + "px";
+        }
         recognizeTrackElement();
         trackCrossing();
     }
 }
 const getOffsetProperty = function (e) {
     flag = true;
-    timing(); //wywołaj tę metodę w innym miejscu
+    startTiming++;
+    timing();
     offsetX = e.offsetX;
     offsetY = e.offsetY;
 }
