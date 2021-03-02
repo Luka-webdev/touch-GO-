@@ -10,14 +10,21 @@
       href="https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/media.css" />
   </head>
   <body>
     <div class="wrapperProject">
-      <div class="wrapperTracks">
-        
-      </div>
+      <div class="wrapperTracks"></div>
       <div class="wrapperWelcomeScreen">
         <div class="welcomeScreen">
           <h1 class="gameTitle">
@@ -26,22 +33,29 @@
           </h1>
           <div class="gameDescription">
             <p>
-              Witaj w grze touch&GO! Twoim zadaniem będzie przeprowadzić kulę przez kręty
-              labirynt.
+              Witaj w grze touch&GO! Twoim zadaniem będzie przeprowadzić kulę
+              przez kręty labirynt.
+            </p>
+            <p>By rozpocząć grę musisz:</p>
+            <ul>
+              <li>Najechać kursorem na kulkę,</li>
+              <li>Nacisnąć lewy przycisk myszy,</li>
+              <li>
+                Gdy przycisk jest wciśnięty możesz porusząć kulkę przesuwając
+                mysz.
+              </li>
+            </ul>
+            <p>
+              Uważaj by nie dotknąć kulką ścian labiryntu. Musisz sie również
+              spieszyć bo na pokonanie każdej planszy masz określny czas.
             </p>
             <p>
-              By rozpocząć grę musisz:
-              <ul>
-                <li>Najechać kursorem na kulkę,</li>
-                <li>Nacisnąć lewy przycisk myszy,</li>
-                <li>Gdy przycisk jest wciśnięty możesz porusząć kulkę przesuwając mysz.</li>
-              </ul>
+              Dodatkową trudnością jest powiększający się rozmiar kulki w każdej
+              kolejnej planszy.
             </p>
-            <p>Uważaj by nie dotknąć kulką ścian labiryntu. Musisz sie również spieszyć bo na pokonanie każdej planszy masz określny czas.</p>
-            <p>Dodatkową trudnością jest powiększający się rozmiar kulki w każdej kolejnej planszy.</p>
             <h3>Powodzenia!!!</h3>
           </div>
-          <div class="closeWelcomeScreen"><i class="far fa-window-close"></i></div>
+          <i class="far fa-window-close"></i>
         </div>
       </div>
       <div class="wrapperAreaGame visibility">
@@ -49,7 +63,8 @@
           <div class="ball"></div>
           <div class="continueGame visibility">
             <h1>Game over</h1>
-            <span>Spróbuj jeszcze raz</span><i class="fas fa-arrow-circle-right"></i>
+            <span>Spróbuj jeszcze raz</span
+            ><i class="fas fa-arrow-circle-right"></i>
           </div>
           <div class="trackWin visibility">
             <h1>Gratulacje</h1>
@@ -60,11 +75,13 @@
             <p>Oto twoje wyniki:</p>
             <p class="totalTime"></p>
             <p class="totalMistakes"></p>
-            <p>Zagraj ponownie i popraw wyniki.<i class="fas fa-undo-alt"></i></p>
+            <p>
+              Zagraj ponownie i popraw wyniki.<i class="fas fa-undo-alt"></i>
+            </p>
           </div>
           <div class="counter"></div>
         </div>
-      </div>  
+      </div>
     </div>
 
     <script src="js/tracks.min.js"></script>

@@ -249,12 +249,15 @@ const moveBall = function (e) {
     }
 }
 const getOffsetProperty = function (e) {
-    flag = true;
-    startTiming++;
-    timing();
-    offsetX = e.offsetX;
-    offsetY = e.offsetY;
+    if (continueGame.classList.contains('visibility')) {
+        flag = true;
+        startTiming++;
+        timing();
+        offsetX = e.offsetX;
+        offsetY = e.offsetY;
+    }
 }
+
 ball.addEventListener('mousedown', getOffsetProperty);
 
 ball.addEventListener('mouseup', function () {
