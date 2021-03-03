@@ -213,7 +213,7 @@ const trackCrossing = function () {
         setTimeout(() => {
             if (actualTrack == tracksArray.length - 1) {
                 totalMistakes.textContent = `Łączna ilość błędów: ${totalMistakesSum}`;
-                totalTime.textContent = `Łączna czas przejścia wszystkich labiryntów: ${totalTimesSum.toFixed(2)}`;
+                totalTime.textContent = `Łączny czas przejścia wszystkich labiryntów: ${totalTimesSum.toFixed(2)} s`;
                 gameWin.classList.remove('visibility');
             } else {
                 trackWin.classList.remove('visibility');
@@ -249,7 +249,7 @@ const moveBall = function (e) {
     }
 }
 const getOffsetProperty = function (e) {
-    if (continueGame.classList.contains('visibility')) {
+    if (continueGame.classList.contains('visibility') && gameWin.classList.contains('visibility') && trackWin.classList.contains('visibility')) {
         flag = true;
         startTiming++;
         timing();

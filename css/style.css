@@ -19,7 +19,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #1e272e;
+  background-color: #243b55;
   width: 100%;
   height: 100%;
   display: flex;
@@ -69,7 +69,7 @@
   width: 80vw;
   height: auto;
   border: 4px solid black;
-  background-color: #182c61;
+  background: linear-gradient(#000428, #004e92);
 }
 .gameTitle {
   text-align: center;
@@ -133,7 +133,7 @@
 .ball {
   position: absolute;
   border-radius: 50%;
-  background-color: #c23616;
+  background-color: #cac531;
 }
 .continueGame,
 .trackWin,
@@ -144,16 +144,27 @@
   transform: translate(-50%, -50%);
   border: 4px solid black;
   padding: 3vw;
-  background-color: #182c61;
   font-family: arial;
   text-align: center;
   font-size: 2vw;
   color: white;
 }
+.trackWin {
+  background: linear-gradient(#52c234, #061700);
+}
+.continueGame {
+  background: linear-gradient(#870000, #190a05);
+}
+.gameWin {
+  background: linear-gradient(#f83600, #fe8c00);
+  color: black;
+  font-weight: bold;
+}
 .areaGame h1 {
   font-family: "RocknRoll One", sans-serif;
   padding-bottom: 1.5vw;
   text-shadow: 3px 3px black;
+  color: white;
 }
 .fa-arrow-circle-right,
 .fa-undo-alt {
@@ -163,15 +174,15 @@
 .fa-arrow-circle-right:hover,
 .fa-undo-alt:hover {
   cursor: pointer;
-  color: lime;
+  color: #52c234;
 }
 .counter {
   position: absolute;
   bottom: 0;
-  left: 0;
+  right: 0;
   width: 6vw;
   padding: 0.5vw;
-  background-color: #eb2f06;
+  background-color: #1f1c2c;
   font-size: 2vw;
   border-radius: 0.5vw;
   text-align: center;
