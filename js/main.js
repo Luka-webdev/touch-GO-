@@ -21,6 +21,19 @@ let dimensionsAreaGame = getComputedStyle(areaGame);
 let size = 0.5;
 let actualTrack = 0;
 
+// adjusting the size of the areagame depending on the ratio of the width and length of the screen
+
+let ratioWidthToHeight = (window.innerWidth / window.innerHeight).toFixed(1);
+if (ratioWidthToHeight == 1.3) {
+    areaGame.style.width = 100 + "vw"
+}
+if (ratioWidthToHeight > 2.1) {
+    areaGame.style.height = 95 + "vh"
+    areaGame.style.marginTop = 1.5 + "vw"
+}
+
+// object with basic parameters
+
 const settings = {
     shiftX: parseInt(dimensionsAreaGame.marginLeft),
     shiftY: parseInt(dimensionsAreaGame.marginTop),
@@ -32,7 +45,7 @@ const settings = {
 // functions for creating boxes showing all tracks and showing area game for active track
 
 const showAreaGame = function () {
-    wrapperAreaGame.classList.remove('visibility')
+    wrapperAreaGame.classList.remove('visibility');
     createTrack();
     counter.textContent = `${Math.ceil(tracksArray[actualTrack].layout.length / 3).toFixed(2)}`;
 }
@@ -110,10 +123,8 @@ const timing = function () {
 
 const countingTimes = function () {
     let trackTime = Math.ceil(tracksArray[actualTrack].layout.length / 3) - counter.textContent;
-    console.log(trackTime)
     totalTimesSum += trackTime;
-    console.log(totalTimesSum)
-}
+};
 
 // function to lose game
 
@@ -125,7 +136,6 @@ const gameOver = function () {
     setTimeout(() => {
         continueGame.classList.remove('visibility');
     }, 500)
-
 }
 
 //determining the conditions for losing the game
@@ -237,10 +247,15 @@ const trackCrossing = function () {
 
 //functions to move ball
 
-const moveBall = function (e) {
+const moveBall = function (e, mobile) {
     if (flag) {
-        ball.style.top = e.clientY - settings.shiftY - offsetY + "px";
-        ball.style.left = e.clientX - settings.shiftX - offsetX + "px";
+        if (mobile == true) {
+            ball.style.top = e.touches[0].clientY - settings.shiftY - settings.ballSize / 2 + "px";
+            ball.style.left = e.touches[0].clientX - settings.shiftX - settings.ballSize / 2 + "px";
+        } else {
+            ball.style.top = e.clientY - settings.shiftY - offsetY + "px";
+            ball.style.left = e.clientX - settings.shiftX - offsetX + "px";
+        }
         if (ball.style.left < 0 + "px") {
             ball.style.left = 0 + "px";
         }
@@ -248,22 +263,38 @@ const moveBall = function (e) {
         trackCrossing();
     }
 }
-const getOffsetProperty = function (e) {
+
+const getOffsetProperty = function (e, mobile) {
     if (continueGame.classList.contains('visibility') && gameWin.classList.contains('visibility') && trackWin.classList.contains('visibility')) {
         flag = true;
         startTiming++;
         timing();
-        offsetX = e.offsetX;
-        offsetY = e.offsetY;
+        if (mobile != true) {
+            offsetX = e.offsetX;
+            offsetY = e.offsetY;
+        }
     }
 }
 
-ball.addEventListener('mousedown', getOffsetProperty);
+ball.addEventListener('mousedown', function (e) {
+    getOffsetProperty(e, false)
+});
+ball.addEventListener('touchstart', function (e) {
+    getOffsetProperty(e, true)
+});
 
 ball.addEventListener('mouseup', function () {
     flag = false;
 })
-areaGame.addEventListener('mousemove', moveBall)
+ball.addEventListener('touchend', function () {
+    flag = false;
+})
+areaGame.addEventListener('mousemove', function (e) {
+    moveBall(e, false)
+})
+areaGame.addEventListener('touchmove', function (e) {
+    moveBall(e, true)
+})
 
 // close the welcome screen
 

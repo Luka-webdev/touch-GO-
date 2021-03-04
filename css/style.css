@@ -178,8 +178,8 @@
 }
 .counter {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 2px;
+  right: 2px;
   width: 6vw;
   padding: 0.5vw;
   background-color: #1f1c2c;
