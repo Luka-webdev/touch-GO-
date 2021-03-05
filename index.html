@@ -19,13 +19,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/media.css" />
+    <link rel="stylesheet" href="css/styleprefixer.min.css" />
   </head>
   <body>
     <div class="wrapperProject">
-      <div class="wrapperTracks"></div>
-      <div class="wrapperWelcomeScreen">
+      <div class="wrapperTracks position"></div>
+      <div class="wrapperWelcomeScreen position">
         <div class="welcomeScreen">
           <h1 class="gameTitle">
             touch<span><small>&</small></span
@@ -33,8 +32,8 @@
           </h1>
           <div class="gameDescription">
             <p>
-              Witaj w grze touch&GO! Twoim zadaniem będzie przeprowadzić kulę
-              przez kręty labirynt.
+              Witaj w grze touch&GO! Twoim zadaniem będzie przeprowadzić kulkę
+              przez kręte labirynty.
             </p>
             <p>By rozpocząć grę musisz:</p>
             <ul>
@@ -46,7 +45,7 @@
               </li>
             </ul>
             <p>
-              Uważaj by nie dotknąć kulką ścian labiryntu. Musisz sie również
+              Uważaj by nie dotknąć kulką ścian labiryntu. Musisz się również
               spieszyć bo na pokonanie każdej planszy masz określny czas.
             </p>
             <p>
@@ -58,7 +57,7 @@
           <i class="far fa-window-close"></i>
         </div>
       </div>
-      <div class="wrapperAreaGame visibility">
+      <div class="wrapperAreaGame visibility position">
         <div class="areaGame">
           <div class="ball"></div>
           <div class="continueGame visibility">
@@ -85,6 +84,6 @@
     </div>
 
     <script src="js/tracks.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.min.js"></script>
   </body>
 </html>

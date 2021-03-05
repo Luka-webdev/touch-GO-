@@ -25,11 +25,10 @@ let actualTrack = 0;
 
 let ratioWidthToHeight = (window.innerWidth / window.innerHeight).toFixed(1);
 if (ratioWidthToHeight == 1.3) {
-    areaGame.style.width = 100 + "vw"
+    areaGame.style.width = 100 + "vw";
 }
 if (ratioWidthToHeight > 2.1) {
-    areaGame.style.height = 95 + "vh"
-    areaGame.style.marginTop = 1.5 + "vw"
+    areaGame.style.height = 95 + "vh";
 }
 
 // object with basic parameters
